@@ -26,7 +26,8 @@ import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import de.hdodenhof.circleimageview.CircleImageView
 
-
+// Class for editing users account
+// Using Firebase Auth, FirebaseStorage, Firebase Database
 class AccountSettingsActivity : AppCompatActivity() {
 
     private lateinit var firebaseUser: FirebaseUser
@@ -88,7 +89,8 @@ class AccountSettingsActivity : AppCompatActivity() {
             findViewById<CircleImageView>(R.id.image_profile_frag).setImageURI(imageUri)
         }
     }
-
+    // Function for updating all of the profile data including the profile image
+    // Stores new information in Firebase Database
     private fun updateImageAndInfo() {
         when {
             findViewById<EditText>(R.id.full_name_profile_frag).text.toString() == "" -> {
@@ -147,7 +149,8 @@ class AccountSettingsActivity : AppCompatActivity() {
         }
     }
 
-
+    // Function for updating user information excluding users profile image
+    // Stores new information in Firebase Database
     private fun updateUserInfoOnly() {
         when {
             findViewById<EditText>(R.id.full_name_profile_frag).text.toString() == "" -> {
@@ -175,7 +178,8 @@ class AccountSettingsActivity : AppCompatActivity() {
             }
         }
     }
-
+    // Function for getting users information from Firebase Database
+    // Using picasso to get the image
     private fun userInfo() {
         val userRef = FirebaseDatabase.getInstance()
                 .reference
