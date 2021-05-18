@@ -22,7 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import jp.shts.android.storiesprogressview.StoriesProgressView
-
+// Class for displaying stories in Memories
 class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
     var currentUserId: String = ""
     var userId: String = ""
@@ -101,7 +101,8 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
             }
         }
     }
-
+    // Function for getting user's stories
+    // Parameter: a string which is a userId
     private fun getStories(userId: String) {
         imageList = ArrayList()
         storyIdList = ArrayList()
@@ -139,7 +140,7 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
             }
         })
     }
-
+    // Function to add a listener to a user
     private fun userInfo(userId: String) {
         val userRef = FirebaseDatabase.getInstance()
             .reference
@@ -164,7 +165,7 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
             }
         })
     }
-
+    // Function for getting a story from Firebase Realtime Database
     private fun addView(storyId: String) {
         FirebaseDatabase.getInstance().reference
             .child("Story")
@@ -175,6 +176,7 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
             .setValue(true)
     }
 
+    // Function for counting the view number on a story
     private fun viewNumber(storyId: String) {
         val viewRef = FirebaseDatabase.getInstance().reference
             .child("Story")
@@ -192,32 +194,34 @@ class StoryActivity : AppCompatActivity(), StoriesProgressView.StoriesListener {
             }
         })
     }
-
+    // Helper function to destory a story
     override fun onDestroy() {
         super.onDestroy()
         storiesProgressView!!.destroy()
     }
-
+    // Helper function to resume stories from a pause
     override fun onResume() {
         super.onResume()
         storiesProgressView!!.resume()
     }
-
+    // Helper function to pause stories
     override fun onPause() {
         super.onPause()
         storiesProgressView!!.pause()
     }
-
+    // Helper function to close stories when done
     override fun onComplete() {
         finish()
     }
-
+    // Helper function to get previous story
+    // Using Picasso for loading image
     override fun onPrev() {
         if(counter - 1 < 0) return
         Picasso.get().load(imageList!![--counter]).into(findViewById<ImageView>(R.id.view_story_image))
         viewNumber(storyIdList!![counter])
     }
-
+    // Helper function for gettinng next story when next selected
+    // Using Picasso for loading image
     override fun onNext() {
         Picasso.get().load(imageList!![++counter]).into(findViewById<ImageView>(R.id.view_story_image))
         addView(storyIdList!![counter])

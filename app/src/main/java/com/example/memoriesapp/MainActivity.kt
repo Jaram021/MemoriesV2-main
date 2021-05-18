@@ -16,7 +16,8 @@ import com.example.memoriesapp.Fragments.ProfileFragment
 import com.example.memoriesapp.Fragments.SearchFragment
 
 class MainActivity : AppCompatActivity() {
-
+    // Create a listener for our navigation bar
+    // When icon selected go to that icons associated Fragment
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_home -> {
@@ -43,13 +44,14 @@ class MainActivity : AppCompatActivity() {
         }
         false
     }
-
+    // Function to move to selected fragment from the navigation bar
+    // Parameter: Fragment
     private fun moveToFragment(fragment: Fragment) {
         val fragmentTrans = supportFragmentManager.beginTransaction()
         fragmentTrans.replace(R.id.fragment_container, fragment)
         fragmentTrans.commit()
     }
-
+    // On create make our navigation bar and start at HomeFragement
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

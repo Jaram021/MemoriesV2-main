@@ -11,7 +11,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-
+// Class to allow new users to sign up for Memories
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,9 @@ class SignUpActivity : AppCompatActivity() {
             CreateAccount()
         }
     }
-
+    // Function to create a new Memories account
+    // using Firebase Auth email/password to create a new user
+    // Users consist of a fullName, userName, email, password
     private fun CreateAccount() {
         val fullName = findViewById<EditText>(R.id.fullname_signup).text.toString()
         val userName = findViewById<EditText>(R.id.username_signup).text.toString()
@@ -65,6 +67,9 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    // Function to save the users Info
+    // Using Firebase Realtime Database to store info
+    // UserInfo consists of uid, searchname, fullname, username, email, bio, image
     private fun saveUserInfo(fullName: String, userName: String, email: String, progressDialog: ProgressDialog) {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
         val usersRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")

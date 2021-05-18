@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-
+// Class for allowing users to sign in to Memories via Firebase Auth email/password
 class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,8 @@ class SignInActivity : AppCompatActivity() {
             loginUser()
         }
     }
-
+    // Function for a user to login
+    // using Firebase Auth email/password sign in
     private fun loginUser() {
         val email = findViewById<EditText>(R.id.email_login).text.toString()
         val password = findViewById<EditText>(R.id.password_login).text.toString()
@@ -63,7 +64,7 @@ class SignInActivity : AppCompatActivity() {
             }
         }
     }
-
+    // Override the onStart function to check if user is logged in and if so skip login
     override fun onStart() {
         super.onStart()
 
