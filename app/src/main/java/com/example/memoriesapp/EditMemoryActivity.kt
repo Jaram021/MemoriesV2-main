@@ -21,7 +21,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
-
+// Class for a user to edit their Memories
 class EditMemoryActivity : AppCompatActivity() {
     private lateinit var firebaseUser: FirebaseUser
 
@@ -39,7 +39,7 @@ class EditMemoryActivity : AppCompatActivity() {
         storagePostPicRef = FirebaseStorage.getInstance().reference.child("Memory Images")
 
 
-        addMemory.setOnClickListener { uploadImage(); deleteImage(child) }
+        addMemory.setOnClickListener { uploadImage(); deleteMemory(child) }
         quitBtn.setOnClickListener {finish()}
 
         CropImage.activity().setAspectRatio(2,1).start(this@EditMemoryActivity)
@@ -56,13 +56,15 @@ class EditMemoryActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.edit_image_post).setImageURI(imageUri)
         }
     }
-
-    private fun deleteImage(child : DatabaseReference){
+    // Function for deleting the original memory that has been edited
+    // Not implemented
+    private fun deleteMemory(child : DatabaseReference){
         //TODO
         // Delete original Memory that has been edited now
         // Or Instead of making new Memory and deleting old edit in place
         Toast.makeText(this, "Need to delete old memory!", Toast.LENGTH_LONG).show()
     }
+    // Function for uploading image
     private fun uploadImage() {
         when {
             imageUri == null ->

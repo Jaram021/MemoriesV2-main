@@ -10,7 +10,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
+// Class for displaying Users activity on Memories
 class DisplayUsersActivity : AppCompatActivity() {
     var id: String = ""
     var title: String = ""
@@ -51,7 +51,7 @@ class DisplayUsersActivity : AppCompatActivity() {
             "views" -> getViews()
         }
     }
-
+    // Helper function for getting views from Firebase Database
     private fun getViews() {
         val viewsRef = FirebaseDatabase.getInstance().reference
             .child("Story")
@@ -77,7 +77,7 @@ class DisplayUsersActivity : AppCompatActivity() {
             }
         })
     }
-
+    // Helper function for getting followers from Firebase Database
     private fun getFollowers() {
         val followersRef = FirebaseDatabase.getInstance().reference
             .child("Follow")
@@ -100,7 +100,7 @@ class DisplayUsersActivity : AppCompatActivity() {
             }
         })
     }
-
+    // Helper function for getting following from Firebase Database
     private fun getFollowing() {
         val followingRef = FirebaseDatabase.getInstance().reference
             .child("Follow")
@@ -123,7 +123,7 @@ class DisplayUsersActivity : AppCompatActivity() {
             }
         })
     }
-
+    // Helper function for getting likes from Firebase Database
     private fun getLikes() {
         val likeRef = FirebaseDatabase.getInstance().reference
             .child("Likes").child(id)
@@ -144,7 +144,7 @@ class DisplayUsersActivity : AppCompatActivity() {
             }
         })
     }
-
+    // Helper function for getting Users from Firebase Database
     private fun getUsers() {
         val userRef = FirebaseDatabase.getInstance().reference
             .child("Users")

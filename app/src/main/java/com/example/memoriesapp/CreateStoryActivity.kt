@@ -21,7 +21,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
-
+// Class for creating Stories in Memories
 class CreateStoryActivity : AppCompatActivity() {
 
     private var myUrl: String = ""
@@ -48,7 +48,7 @@ class CreateStoryActivity : AppCompatActivity() {
             uploadToStory()
         }
     }
-
+    // Function for uploading stories to Firebase Database
     private fun uploadToStory() {
         when {
             imageUri == null ->

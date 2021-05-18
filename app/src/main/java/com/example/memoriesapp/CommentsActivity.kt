@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-
+// Class for creating comments on memories in Memories
 class CommentsActivity : AppCompatActivity() {
     private var memoryId = ""
     private var publisherId = ""
@@ -59,7 +59,7 @@ class CommentsActivity : AppCompatActivity() {
             }
         }
     }
-
+    // Function to add comment to Memory in Firebase Database
     private fun addComment() {
         val commentsRef = FirebaseDatabase.getInstance().reference
             .child("Comments")
@@ -76,7 +76,7 @@ class CommentsActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.comment)!!.text.clear()
 
     }
-
+    // Function to get users Profile Image from Firebase Database
     private fun getUserImg() {
         val userRef = FirebaseDatabase.getInstance()
             .reference
@@ -98,7 +98,7 @@ class CommentsActivity : AppCompatActivity() {
             }
         })
     }
-
+    // Function to get users Memory's image
     private fun getMemoryImg() {
         val memoryRef = FirebaseDatabase.getInstance()
             .reference
@@ -121,7 +121,7 @@ class CommentsActivity : AppCompatActivity() {
             }
         })
     }
-
+    // Function to get Memory's comments
     private fun getComments() {
         val commentsRef = FirebaseDatabase.getInstance().reference
             .child("Comments")
@@ -145,6 +145,7 @@ class CommentsActivity : AppCompatActivity() {
             }
         })
     }
+    // Function to add notification to Firebase Database
     private fun addNotification() {
         val notificationRef = FirebaseDatabase.getInstance().reference
                 .child("Notifications")

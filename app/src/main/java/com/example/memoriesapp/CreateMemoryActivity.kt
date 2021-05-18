@@ -22,7 +22,7 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
 import de.hdodenhof.circleimageview.CircleImageView
-
+// Class for creating new Memories
 class CreateMemoryActivity : AppCompatActivity() {
 
     private lateinit var firebaseUser: FirebaseUser
@@ -57,7 +57,7 @@ class CreateMemoryActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.image_post).setImageURI(imageUri)
         }
     }
-
+    // Function for uploading memory to Firebase Database
     private fun uploadImage() {
         when {
             imageUri == null ->
