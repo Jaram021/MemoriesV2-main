@@ -178,6 +178,7 @@ class MemoryAdapter
         FirebaseStorage.getInstance().getReferenceFromUrl(memory.getMemoryImage()).delete()
 
         FirebaseDatabase.getInstance().reference.child("Memories").child(memory.getMemoryId()).removeValue()
+        mContext.startActivity(Intent(mContext, MainActivity::class.java))
     }
 
     // Check if the memory is saved for user
