@@ -2,28 +2,27 @@ package com.example.memoriesapp
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
 import android.widget.ImageView
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.theartofdev.edmodo.cropper.CropImage
+import android.content.Intent
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
-import com.theartofdev.edmodo.cropper.CropImage
-// Class for a user to edit their Memories
+import com.squareup.picasso.Picasso
+
 class EditMemoryActivity : AppCompatActivity() {
-    private lateinit var firebaseUser: FirebaseUser
 
     private var myUrl: String = ""
     private var imageUri: Uri? = null
@@ -32,18 +31,28 @@ class EditMemoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_memory)
-        val child = FirebaseDatabase.getInstance().reference.child("Memories")
+
+        val editDescription = intent.getStringExtra("editdescription")
+        val editImage = intent.getStringExtra("editimage")?.toUri()
+
         val addMemory: ImageView = findViewById<ImageView>(R.id.edit_add_memory_view)
         val quitBtn: ImageView = findViewById<ImageView>(R.id.edit_cancel_memory_view)
+        val editMemoryImage: ImageView = findViewById<ImageView>(R.id.edit_image_post)
+        val editMemoryDescription: EditText = findViewById<EditText>(R.id.edit_description)
+
+        Picasso.get().load(editImage).placeholder(R.drawable.profile).into(editMemoryImage)
+
+        editMemoryDescription.setText(editDescription)
 
         storagePostPicRef = FirebaseStorage.getInstance().reference.child("Memory Images")
 
 
-        addMemory.setOnClickListener { uploadImage(); deleteMemory(child) }
+        addMemory.setOnClickListener { uploadImage() }
         quitBtn.setOnClickListener {finish()}
 
-        CropImage.activity().setAspectRatio(2,1).start(this@EditMemoryActivity)
-
+        editMemoryImage.setOnClickListener {
+            CropImage.activity().setAspectRatio(2,1).start(this@EditMemoryActivity)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -56,15 +65,7 @@ class EditMemoryActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.edit_image_post).setImageURI(imageUri)
         }
     }
-    // Function for deleting the original memory that has been edited
-    // Not implemented
-    private fun deleteMemory(child : DatabaseReference){
-        //TODO
-        // Delete original Memory that has been edited now
-        // Or Instead of making new Memory and deleting old edit in place
-        Toast.makeText(this, "Need to delete old memory!", Toast.LENGTH_LONG).show()
-    }
-    // Function for uploading image
+
     private fun uploadImage() {
         when {
             imageUri == null ->
@@ -75,7 +76,7 @@ class EditMemoryActivity : AppCompatActivity() {
             }
             else -> {
                 val progressDialog = ProgressDialog(this)
-                progressDialog.setTitle("Adding New Memory")
+                progressDialog.setTitle("Editing Memory")
                 progressDialog.setMessage("Updating Your Memory Bank")
                 progressDialog.show()
 
@@ -97,7 +98,7 @@ class EditMemoryActivity : AppCompatActivity() {
                         myUrl = downloadUrl.toString()
 
                         val ref = FirebaseDatabase.getInstance().reference.child("Memories")
-                        val memoryId = ref.push().key // create key for memory
+                        val memoryId = intent.getStringExtra("memoryid") // create key for memory
 
                         val memoryMap = HashMap<String, Any>()
                         memoryMap["memoryid"] = memoryId!!

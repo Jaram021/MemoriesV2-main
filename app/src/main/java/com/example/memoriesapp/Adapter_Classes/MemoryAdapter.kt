@@ -161,7 +161,7 @@ class MemoryAdapter
                     popupMenu.menuInflater.inflate(R.menu.memory_options, popupMenu.menu)
                     popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                         when (item.itemId) {
-                            R.id.memory_edit -> mContext.startActivity(Intent(mContext, EditMemoryActivity::class.java))
+                            R.id.memory_edit -> editMemory(memory)
 
                             R.id.memory_delete -> deleteMemory(memory)
                         }
@@ -171,6 +171,16 @@ class MemoryAdapter
                 }
             }
         }
+    }
+    // if options button memory clicked, set intent for EditMemoryActivity
+    private fun editMemory(memory: Memories) {
+        val intent = Intent(mContext, EditMemoryActivity::class.java)
+
+        intent.putExtra("editdescription", memory.getDescription())
+        intent.putExtra("memoryid", memory.getMemoryId())
+        intent.putExtra("editimage", memory.getMemoryImage())
+
+        mContext.startActivity(intent)
     }
 
     // Delete Memory and Memory Image from Firebase
